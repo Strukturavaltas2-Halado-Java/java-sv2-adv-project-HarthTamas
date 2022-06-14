@@ -21,6 +21,13 @@ public class Port {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Port(String portName, String email, int numberOfGuestBerths) {
+        this.portName = portName;
+        this.email = email;
+        this.numberOfGuestBerths = numberOfGuestBerths;
+    }
+
+
     @Column(name="port_name")
     private String portName;
 

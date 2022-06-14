@@ -1,0 +1,16 @@
+POST http://localhost:8080/api/ports
+Content-Type: application/json
+Accept: application/json
+
+{
+  "portName": "Badacsony",
+  "email": "badacsony@balaport.hu",
+  "numberOfGuestBerths": 5
+}
+
+###
+GET http://localhost:8080/api/ports
+Accept: application/json
+
+###
+
