@@ -33,7 +33,7 @@ public class Booking {
     @Column(name="time_of_booking")
     private LocalDateTime timeOfBooking;
 
-    @Column(name="from")
+    @Column(name="from_date")
     private LocalDate fromDate;
 
     @Column(name="nr_of_day")
