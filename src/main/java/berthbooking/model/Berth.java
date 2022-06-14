@@ -37,4 +37,10 @@ public class Berth {
     @ManyToOne
     @JoinColumn(name = "port_id")
     private Port port;
+
+
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
+
 }

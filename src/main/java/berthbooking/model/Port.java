@@ -29,7 +29,12 @@ public class Port {
     @Column(name="nr_of_guest_berths")
     private int numberOfGuestBerths;
 
-    @OneToMany(mappedBy = "ports")
+    @OneToMany(mappedBy = "port")
     private List<Berth> berths = new ArrayList<>();
+
+    public void addBerth(Berth berth) {
+        berths.add(berth);
+        berth.setPort(this);
+    }
 
 }
