@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -14,7 +16,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="berths")
 public class Berth {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +31,7 @@ public class Berth {
     @Column(name="berth_type")
     private BerthType berthType;
 
-
+    @ElementCollection
+    private List<Booking> bookings = new ArrayList<>();
+    
 }
