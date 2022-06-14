@@ -2,6 +2,7 @@ package berthbooking.service;
 
 import berthbooking.dtos.CreatePortCommand;
 import berthbooking.dtos.PortDto;
+import berthbooking.exceptions.PortNotFoundException;
 import berthbooking.model.Port;
 import berthbooking.repository.PortRepository;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,8 @@ public class BerthBookingService {
         return modelMapper.map(port,PortDto.class);
     }
 
-
+    public PortDto getPortById(long id) {
+        Port port = portRepository.findById(id).orElseThrow(()->new PortNotFoundException(id));
+        return modelMapper.map(port,PortDto.class);
+    }
 }
