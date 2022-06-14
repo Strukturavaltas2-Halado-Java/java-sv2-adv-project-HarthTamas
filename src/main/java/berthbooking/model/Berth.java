@@ -33,5 +33,8 @@ public class Berth {
 
     @ElementCollection
     private List<Booking> bookings = new ArrayList<>();
-    
+
+    @ManyToOne
+    @JoinColumn(name = "port_id")
+    private Port port;
 }

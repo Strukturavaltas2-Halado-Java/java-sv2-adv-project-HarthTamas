@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,5 +28,8 @@ public class Port {
 
     @Column(name="nr_of_guest_berths")
     private int numberOfGuestBerths;
+
+    @OneToMany(mappedBy = "ports")
+    private List<Berth> berths = new ArrayList<>();
 
 }
