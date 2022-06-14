@@ -1,1 +1,1 @@
-A Berthbooking egy balatoni túravitorlázást támogató alkalmazás kikötőhely foglalási modulja.
+A Berthbooking egy balatoni kikötőhely foglalási alkalmazás, amely a túravitorlázók foglalásait kezeli.
