@@ -1,3 +1,5 @@
+
+###
 POST http://localhost:8080/api/ports
 Content-Type: application/json
 Accept: application/json
@@ -9,18 +11,33 @@ Accept: application/json
 }
 
 ###
-GET http://localhost:8080/api/ports/1
+GET http://localhost:8080/api/ports/10
 Accept: application/json
+
 ###
 
 GET http://localhost:8080/api/ports
 Accept: application/json
+
 ###
 
 GET http://localhost:8080/api/ports?value=9&name=badacsony
 Accept: application/json
+
 ###
 
 GET http://localhost:8080/api/ports?value=10
 Accept: application/json
 ###
+
+PUT http://localhost:8080/api/ports/11/
+Content-Type: application/json
+Accept: application/json
+
+{
+"email":"11other.com",
+"numberOfGuestBerths" : 55
+}
+###
+
+

@@ -2,6 +2,7 @@ package berthbooking.controller;
 
 import berthbooking.dtos.CreatePortCommand;
 import berthbooking.dtos.PortDto;
+import berthbooking.dtos.UpdatePortCommand;
 import berthbooking.service.BerthBookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,5 +41,8 @@ public class PortController {
         service.deletePortById(id);
     }
 
-    
+    @PutMapping("/{id}")
+    public PortDto updatePortEmailAndNumberOfBerths(@PathVariable("id") Long id, @RequestBody UpdatePortCommand command) {
+        return service.updatePortEmailAndNumberOfBerths(id, command);
+    }
 }
