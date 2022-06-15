@@ -3,7 +3,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "portName": "Badacsony",
+  "portName": "Badacsonnnnny",
   "email": "badacsony@balaport.hu",
   "numberOfGuestBerths": 5
 }
@@ -11,6 +11,8 @@ Accept: application/json
 ###
 GET http://localhost:8080/api/ports/1
 Accept: application/json
-
 ###
 
+GET http://localhost:8080/api/ports
+Accept: application/json
+###
