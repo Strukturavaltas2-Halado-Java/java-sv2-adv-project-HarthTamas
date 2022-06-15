@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,9 +33,12 @@ public class BerthBookingService {
         return modelMapper.map(port,PortDto.class);
     }
 
-    public List<PortDto> getPorts() {
-        return portRepository.findAll().stream().map(port -> modelMapper.map(port,PortDto.class)).collect(Collectors.toList());
+    public List<PortDto> getPorts(Optional<String> name, Optional<Integer> value) {
+        List<Port> ports = portRepository.findAllByOptionalOfNameAndNumberOfBerths(name,value);
+                return ports.stream().map(port -> modelMapper.map(port,PortDto.class))
+                .collect(Collectors.toList());
     }
+
 
     public void deletePortById(long id) {
         if (portRepository.existsById(id)) {
