@@ -1,5 +1,6 @@
 package berthbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,8 @@ public class Port {
     @Column(name="nr_of_guest_berths")
     private int numberOfGuestBerths;
 
-    @OneToMany(mappedBy = "port")
+    @OneToMany(mappedBy = "port", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<Berth> berths = new ArrayList<>();
 
     public void addBerth(Berth berth) {

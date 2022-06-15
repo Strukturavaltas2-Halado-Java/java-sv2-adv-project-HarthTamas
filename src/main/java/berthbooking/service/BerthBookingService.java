@@ -1,10 +1,11 @@
 package berthbooking.service;
 
-import berthbooking.dtos.CreatePortCommand;
-import berthbooking.dtos.PortDto;
-import berthbooking.dtos.UpdatePortCommand;
+import berthbooking.dtos.*;
+import berthbooking.exceptions.NumberOfBerthsExceedsLimitException;
 import berthbooking.exceptions.PortNotFoundException;
+import berthbooking.model.Berth;
 import berthbooking.model.Port;
+import berthbooking.repository.BerthRepository;
 import berthbooking.repository.PortRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class BerthBookingService {
 
     private PortRepository portRepository;
+
+    private BerthRepository berthRepository;
     private ModelMapper modelMapper;
 
     public PortDto createPort(CreatePortCommand command) {
@@ -54,5 +57,25 @@ public class BerthBookingService {
         port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
         port.setEmail(command.getEmail());
         return modelMapper.map(port, PortDto.class);
+    }
+
+    public BerthDto addBerthToPort(Long portId, CreateBerthCommand command) {
+        Port port = portRepository.findById(portId).orElseThrow(() -> new PortNotFoundException(portId));
+        Berth berth = new Berth(command.getCode(), command.getLength(), command.getWidth(), command.getBerthType());
+        if (port.getBerths().size() < port.getNumberOfGuestBerths()) {
+            berthRepository.save(berth);
+            port.addBerth(berth);
+        } else {
+            throw new NumberOfBerthsExceedsLimitException(portId, port.getNumberOfGuestBerths());
+        }
+        return modelMapper.map(berth, BerthDto.class);
+    }
+
+    public List<BerthDto> getAllBerthsByPortId(Long portId) {
+        if (!portRepository.existsById(portId)) {
+            throw new PortNotFoundException(portId);
+        }
+        List<Berth> berths = berthRepository.findAllByPort_Id(portId);
+        return berths.stream().map(berth -> modelMapper.map(berth,BerthDto.class)).collect(Collectors.toList());
     }
 }

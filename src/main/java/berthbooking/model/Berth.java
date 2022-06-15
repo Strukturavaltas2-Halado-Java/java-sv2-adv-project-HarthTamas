@@ -1,5 +1,6 @@
 package berthbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class Berth {
 
     @ManyToOne
     @JoinColumn(name = "port_id")
+    @JsonBackReference
     private Port port;
 
 
@@ -43,4 +45,10 @@ public class Berth {
         bookings.add(booking);
     }
 
+    public Berth(String code, int length, int width, BerthType berthType) {
+        this.code = code;
+        this.length = length;
+        this.width = width;
+        this.berthType = berthType;
+    }
 }

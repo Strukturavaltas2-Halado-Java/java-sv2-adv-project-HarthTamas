@@ -11,7 +11,7 @@ Accept: application/json
 }
 
 ###
-GET http://localhost:8080/api/ports/10
+GET http://localhost:8080/api/ports/2
 Accept: application/json
 
 ###
@@ -39,5 +39,7 @@ Accept: application/json
 "numberOfGuestBerths" : 55
 }
 ###
+DELETE http://localhost:8080/api/ports/1
+Accept: application/json
 
-
+###

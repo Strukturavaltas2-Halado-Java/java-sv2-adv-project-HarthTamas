@@ -1,0 +1,18 @@
+
+
+###
+POST http://localhost:8080/api/ports/10
+Content-Type: application/json
+Accept: application/json
+
+{
+  "code": "V01",
+  "length": 900,
+  "width": 260,
+  "berthType": "POWER_WATER"
+}
+###
+GET http://localhost:8080/api/ports/10/berths
+Accept: application/json
+
+###
