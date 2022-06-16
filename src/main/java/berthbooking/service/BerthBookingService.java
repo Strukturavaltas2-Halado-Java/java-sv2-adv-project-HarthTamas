@@ -89,4 +89,13 @@ public class BerthBookingService {
             throw new BerthNotFoundException(id);
         }
     }
+
+    public BerthDto updateBerthById(long id, UpdateBerthCommand command) {
+        Berth berth = berthRepository.findById(id).orElseThrow(()->new BerthNotFoundException(id));
+        berth.setCode(command.getCode());
+        berth.setLength(command.getLength());
+        berth.setWidth(command.getWidth());
+        berth.setBerthType(command.getBerthType());
+        return modelMapper.map(berth, BerthDto.class);
+    }
 }

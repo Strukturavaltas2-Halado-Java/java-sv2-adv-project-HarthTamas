@@ -12,3 +12,17 @@ Accept: application/json
 DELETE http://localhost:8080/api/berths/20
 Accept: application/json
 ###
+
+PUT http://localhost:8080/api/berths/21
+Content-Type: application/json
+Accept: application/json
+
+{
+  "code": "V05",
+  "length": 800,
+  "width": 320,
+  "berthType": "POWER_WATER_WIFI"
+}
+
+
+###

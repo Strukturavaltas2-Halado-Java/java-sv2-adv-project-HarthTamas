@@ -1,11 +1,9 @@
 package berthbooking.controller;
 
 import berthbooking.dtos.BerthDto;
-import berthbooking.dtos.CreateBerthCommand;
-import berthbooking.model.Berth;
+import berthbooking.dtos.UpdateBerthCommand;
 import berthbooking.service.BerthBookingService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,11 +27,15 @@ public class BerthController {
         return service.getBerthById(berthId);
     }
 
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBethById(@PathVariable("id") long id) {
         service.deleteBerthById(id);
+    }
+
+    @PutMapping("{id}")
+    public BerthDto updateBerthById(@PathVariable("id") long id, @RequestBody UpdateBerthCommand command) {
+        return service.updateBerthById(id, command);
     }
 
 
