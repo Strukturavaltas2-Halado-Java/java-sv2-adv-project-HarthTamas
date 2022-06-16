@@ -39,4 +39,13 @@ public class Booking {
     @Column(name="nr_of_day")
     private int numberOfDays;
 
+
+    public Booking(String boatName, String registrationNumber, int boatLength, int boatWidth, LocalDate fromDate, int numberOfDays) {
+        this.boatName = boatName;
+        this.registrationNumber = registrationNumber;
+        this.boatLength = boatLength;
+        this.boatWidth = boatWidth;
+        this.fromDate = fromDate;
+        this.numberOfDays = numberOfDays;
+    }
 }

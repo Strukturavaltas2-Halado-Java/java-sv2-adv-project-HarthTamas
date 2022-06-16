@@ -5,7 +5,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/berths/10
+GET http://localhost:8080/api/berths/21
 Accept: application/json
 ###
 
@@ -23,6 +23,19 @@ Accept: application/json
   "width": 320,
   "berthType": "POWER_WATER_WIFI"
 }
+###
 
+POST http://localhost:8080/api/berths/21
+Content-Type: application/json
+Accept: application/json
+
+{
+  "boatName": "Flyer",
+  "registrationNumber": "h45445",
+  "boatLength":700,
+  "boatWidth": 200,
+  "fromDate": "2022-06-22",
+  "numberOfDays": 3
+}
 
 ###

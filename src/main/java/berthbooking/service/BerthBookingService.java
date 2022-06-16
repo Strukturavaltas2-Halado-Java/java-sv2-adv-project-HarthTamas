@@ -5,6 +5,7 @@ import berthbooking.exceptions.BerthNotFoundException;
 import berthbooking.exceptions.NumberOfBerthsExceedsLimitException;
 import berthbooking.exceptions.PortNotFoundException;
 import berthbooking.model.Berth;
+import berthbooking.model.Booking;
 import berthbooking.model.Port;
 import berthbooking.repository.BerthRepository;
 import berthbooking.repository.PortRepository;
@@ -13,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,7 +81,7 @@ public class BerthBookingService {
 
     public BerthDto getBerthById(Long berthId) {
         Berth berth = berthRepository.findById(berthId).orElseThrow(() -> new BerthNotFoundException(berthId));
-        return modelMapper.map(berth,BerthDto.class);
+        return modelMapper.map(berth, BerthDto.class);
     }
 
     public void deleteBerthById(long id) {
@@ -91,11 +93,20 @@ public class BerthBookingService {
     }
 
     public BerthDto updateBerthById(long id, UpdateBerthCommand command) {
-        Berth berth = berthRepository.findById(id).orElseThrow(()->new BerthNotFoundException(id));
+        Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
         berth.setCode(command.getCode());
         berth.setLength(command.getLength());
         berth.setWidth(command.getWidth());
         berth.setBerthType(command.getBerthType());
         return modelMapper.map(berth, BerthDto.class);
+    }
+
+    public BerthDto addBookingToBerthById(long id, BookingCommand command) {
+        Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
+        Booking booking = new Booking(command.getBoatName(), command.getRegistrationNumber(),
+                command.getBoatLength(), command.getBoatWidth(), command.getFromDate(), command.getNumberOfDays());
+        booking.setTimeOfBooking(LocalDateTime.now());
+        berth.addBooking(booking);
+        return modelMapper.map(berth,BerthDto.class);
     }
 }
