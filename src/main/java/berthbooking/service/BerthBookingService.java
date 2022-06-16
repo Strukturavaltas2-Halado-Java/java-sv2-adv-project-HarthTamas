@@ -72,11 +72,8 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public List<BerthDto> getAllBerthsByPortId(Long portId) {
-        if (!portRepository.existsById(portId)) {
-            throw new PortNotFoundException(portId);
-        }
-        List<Berth> berths = berthRepository.findAllByPort_Id(portId);
+    public List<BerthDto> getAllBerths() {
+        List<Berth> berths = berthRepository.findAll();
         return berths.stream().map(berth -> modelMapper.map(berth, BerthDto.class)).collect(Collectors.toList());
     }
 
@@ -85,6 +82,11 @@ public class BerthBookingService {
         return modelMapper.map(berth,BerthDto.class);
     }
 
-
-
+    public void deleteBerthById(long id) {
+        if (berthRepository.existsById(id)) {
+            berthRepository.deleteById(id);
+        } else {
+            throw new BerthNotFoundException(id);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import berthbooking.model.Berth;
 import berthbooking.service.BerthBookingService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +20,20 @@ public class BerthController {
 
 
     @GetMapping()
-    public List<BerthDto> getAllBerths(@PathVariable("portId") Long portId) {
-        return service.getAllBerthsByPortId(portId);
+    public List<BerthDto> getAllBerths() {
+        return service.getAllBerths();
     }
 
-    @GetMapping("/{berthId}")
-    public BerthDto getBerthById(@PathVariable("berthId") Long berthId) {
+    @GetMapping("/{id}")
+    public BerthDto getBerthById(@PathVariable("id") long berthId) {
         return service.getBerthById(berthId);
+    }
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBethById(@PathVariable("id") long id) {
+        service.deleteBerthById(id);
     }
 
 

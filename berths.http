@@ -1,22 +1,14 @@
 
 
-###
-POST http://localhost:8080/api/ports/10
-Content-Type: application/json
-Accept: application/json
-
-{
-  "code": "V01",
-  "length": 900,
-  "width": 260,
-  "berthType": "POWER_WATER"
-}
-###
-GET http://localhost:8080/api/ports/10/berths
+GET http://localhost:8080/api/berths
 Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/ports/12/berths/10
+GET http://localhost:8080/api/berths/10
+Accept: application/json
+###
+
+DELETE http://localhost:8080/api/berths/20
 Accept: application/json
 ###
