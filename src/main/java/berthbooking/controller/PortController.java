@@ -1,8 +1,6 @@
 package berthbooking.controller;
 
-import berthbooking.dtos.CreatePortCommand;
-import berthbooking.dtos.PortDto;
-import berthbooking.dtos.UpdatePortCommand;
+import berthbooking.dtos.*;
 import berthbooking.service.BerthBookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,5 +42,10 @@ public class PortController {
     @PutMapping("/{id}")
     public PortDto updatePortEmailAndNumberOfBerths(@PathVariable("id") Long id, @RequestBody UpdatePortCommand command) {
         return service.updatePortEmailAndNumberOfBerths(id, command);
+    }
+
+    @PostMapping("/{id}")
+    public PortDto addBerthToPort(@PathVariable("id") Long id, @RequestBody CreateBerthCommand command) {
+        return service.addBerthToPort(id, command);
     }
 }

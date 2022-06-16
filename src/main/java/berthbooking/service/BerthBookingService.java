@@ -1,6 +1,7 @@
 package berthbooking.service;
 
 import berthbooking.dtos.*;
+import berthbooking.exceptions.BerthNotFoundException;
 import berthbooking.exceptions.NumberOfBerthsExceedsLimitException;
 import berthbooking.exceptions.PortNotFoundException;
 import berthbooking.model.Berth;
@@ -59,16 +60,16 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public BerthDto addBerthToPort(Long portId, CreateBerthCommand command) {
-        Port port = portRepository.findById(portId).orElseThrow(() -> new PortNotFoundException(portId));
+    public PortDto addBerthToPort(long id, CreateBerthCommand command) {
+        Port port = portRepository.findById(id).orElseThrow(() -> new PortNotFoundException(id));
         Berth berth = new Berth(command.getCode(), command.getLength(), command.getWidth(), command.getBerthType());
         if (port.getBerths().size() < port.getNumberOfGuestBerths()) {
             berthRepository.save(berth);
             port.addBerth(berth);
         } else {
-            throw new NumberOfBerthsExceedsLimitException(portId, port.getNumberOfGuestBerths());
+            throw new NumberOfBerthsExceedsLimitException(id, port.getNumberOfGuestBerths());
         }
-        return modelMapper.map(berth, BerthDto.class);
+        return modelMapper.map(port, PortDto.class);
     }
 
     public List<BerthDto> getAllBerthsByPortId(Long portId) {
@@ -76,6 +77,14 @@ public class BerthBookingService {
             throw new PortNotFoundException(portId);
         }
         List<Berth> berths = berthRepository.findAllByPort_Id(portId);
-        return berths.stream().map(berth -> modelMapper.map(berth,BerthDto.class)).collect(Collectors.toList());
+        return berths.stream().map(berth -> modelMapper.map(berth, BerthDto.class)).collect(Collectors.toList());
     }
+
+    public BerthDto getBerthById(Long berthId) {
+        Berth berth = berthRepository.findById(berthId).orElseThrow(() -> new BerthNotFoundException(berthId));
+        return modelMapper.map(berth,BerthDto.class);
+    }
+
+
+
 }
