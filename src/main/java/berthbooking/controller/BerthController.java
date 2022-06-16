@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @AllArgsConstructor
@@ -35,13 +36,13 @@ public class BerthController {
     }
 
     @PutMapping("/{id}")
-    public BerthDto updateBerthById(@PathVariable("id") long id, @RequestBody UpdateBerthCommand command) {
+    public BerthDto updateBerthById(@PathVariable("id") long id, @Valid @RequestBody UpdateBerthCommand command) {
         return service.updateBerthById(id, command);
     }
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public BerthDto addBookingToBerthById(@PathVariable("id") long id, @RequestBody BookingCommand command) {
+    public BerthDto addBookingToBerthById(@PathVariable("id") long id, @Valid @RequestBody BookingCommand command) {
         return service.addBookingToBerthById(id, command);
     }
 

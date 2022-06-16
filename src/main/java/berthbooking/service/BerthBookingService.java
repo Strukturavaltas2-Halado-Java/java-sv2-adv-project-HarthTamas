@@ -1,9 +1,7 @@
 package berthbooking.service;
 
 import berthbooking.dtos.*;
-import berthbooking.exceptions.BerthNotFoundException;
-import berthbooking.exceptions.NumberOfBerthsExceedsLimitException;
-import berthbooking.exceptions.PortNotFoundException;
+import berthbooking.exceptions.*;
 import berthbooking.model.Berth;
 import berthbooking.model.Booking;
 import berthbooking.model.Port;
@@ -14,7 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,8 +24,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class BerthBookingService {
 
-    private PortRepository portRepository;
+    private static final LocalDate OPENING_DATE = LocalDate.of(LocalDate.now().getYear(), Month.APRIL, 1);
+    private static final LocalDate CLOSING_DATE = LocalDate.of(LocalDate.now().getYear(), Month.OCTOBER, 31);
 
+    private PortRepository portRepository;
     private BerthRepository berthRepository;
     private ModelMapper modelMapper;
 
@@ -103,10 +105,48 @@ public class BerthBookingService {
 
     public BerthDto addBookingToBerthById(long id, BookingCommand command) {
         Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
+        checkConditions(berth, command);
         Booking booking = new Booking(command.getBoatName(), command.getRegistrationNumber(),
                 command.getBoatLength(), command.getBoatWidth(), command.getFromDate(), command.getNumberOfDays());
         booking.setTimeOfBooking(LocalDateTime.now());
         berth.addBooking(booking);
-        return modelMapper.map(berth,BerthDto.class);
+        return modelMapper.map(berth, BerthDto.class);
+    }
+
+    private void checkConditions(Berth berth, BookingCommand command) {
+        isStartDateInTheFuture(command);
+        isBookingInActualYearsSeason(command);
+        isBoatSmallerThanBerth(berth, command);
+        isBookingTimeFree(berth, command);
+    }
+
+    private void isBoatSmallerThanBerth(Berth berth, BookingCommand command) {
+        if (command.getBoatWidth() >= berth.getWidth() || command.getBoatLength() >= berth.getLength()) {
+            throw new BoatSizeException(berth.getId());
+        }
+    }
+
+    private void isBookingTimeFree(Berth berth, BookingCommand command) {
+        LocalDate startDate = command.getFromDate();
+        LocalDate endDate = command.getFromDate().plusDays(command.getNumberOfDays());
+        for (Booking actual : berth.getBookings()) {
+            LocalDate bookedStartDay = actual.getFromDate();
+            LocalDate bookedEndDay = actual.getFromDate().plusDays(actual.getNumberOfDays());
+            if (endDate.isAfter(bookedStartDay) && startDate.isBefore(bookedEndDay)) {
+                throw new BookingTimeConflictException(berth.getId());
+            }
+        }
+    }
+
+    private void isStartDateInTheFuture(BookingCommand command) {
+        if (command.getFromDate().isBefore(LocalDate.now())) {
+            throw new IllegalStartDateException(command.getFromDate());
+        }
+    }
+
+    private void isBookingInActualYearsSeason(BookingCommand command) {
+        if (command.getFromDate().isBefore(OPENING_DATE) || command.getFromDate().isAfter(CLOSING_DATE.minusDays(command.getNumberOfDays() - 1))) {
+            throw new OutOfActualYearsSeasonException(command.getFromDate());
+        }
     }
 }

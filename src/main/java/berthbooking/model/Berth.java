@@ -40,15 +40,16 @@ public class Berth {
     @JsonBackReference
     private Port port;
 
-
-    public void addBooking(Booking booking) {
-        bookings.add(booking);
-    }
-
     public Berth(String code, int length, int width, BerthType berthType) {
         this.code = code;
         this.length = length;
         this.width = width;
         this.berthType = berthType;
     }
+
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
+
+
 }

@@ -18,7 +18,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "code": "V05",
+  "code": "V01",
   "length": 800,
   "width": 320,
   "berthType": "POWER_WATER_WIFI"
@@ -33,9 +33,9 @@ Accept: application/json
   "boatName": "Flyer",
   "registrationNumber": "h45445",
   "boatLength":700,
-  "boatWidth": 200,
-  "fromDate": "2022-06-22",
-  "numberOfDays": 3
+  "boatWidth": 3190,
+  "fromDate": "2022-09-12",
+  "numberOfDays": 1
 }
 
 ###
