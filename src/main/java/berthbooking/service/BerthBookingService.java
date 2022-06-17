@@ -121,7 +121,6 @@ public class BerthBookingService {
     }
 
     private void checkConditions(Berth berth, CreateBookingCommand command) {
-        isStartDateInTheFuture(command);
         isBookingInActualYearsSeason(command);
         isBoatSmallerThanBerth(berth, command);
         isBookingTimeFree(berth, command);
@@ -142,12 +141,6 @@ public class BerthBookingService {
             if (endDate.isAfter(bookedStartDay) && startDate.isBefore(bookedEndDay)) {
                 throw new BookingTimeConflictException(berth.getId());
             }
-        }
-    }
-
-    private void isStartDateInTheFuture(CreateBookingCommand command) {
-        if (command.getFromDate().isBefore(LocalDate.now())) {
-            throw new IllegalStartDateException(command.getFromDate());
         }
     }
 

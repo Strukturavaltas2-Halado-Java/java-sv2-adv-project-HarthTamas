@@ -34,8 +34,8 @@ Accept: application/json
   "registrationNumber": "h45445",
   "boatLength":620,
   "boatWidth": 150,
-  "fromDate": "2022-06-30",
-  "numberOfDays":4
+  "fromDate": "2022-06-17",
+  "numberOfDays":3
 }
 
 ###

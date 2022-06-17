@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Setter
@@ -31,10 +28,10 @@ public class CreateBookingCommand {
     @Positive(message = "The width of the boat must be positive number!")
     private int boatWidth;
 
-    @NotNull(message = "First date of the booking must be a valid date ('yyyy-mm-dd')")
+    @FutureOrPresent(message = "This date must be in the present or in the future!")
     private LocalDate fromDate;
 
-    @Max(value = 3, message = "Must be a positive number, and less than "+ MAX_DAYS)
+    @Max(value = 3, message = "Must be a positive number and less than "+ MAX_DAYS)
     @Positive(message = "Must be a positive number and less than "+ MAX_DAYS)
     private int numberOfDays;
 

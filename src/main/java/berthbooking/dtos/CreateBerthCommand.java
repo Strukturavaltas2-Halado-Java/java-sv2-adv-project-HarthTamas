@@ -26,7 +26,6 @@ public class CreateBerthCommand {
     @Positive(message = "The width of the berth must be positive number!")
     private int width;
 
-    @NotNull(message = "Type can't be Null!!")
     private BerthType berthType;
 
 }
