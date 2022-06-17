@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface PortRepository extends JpaRepository<Port, Long> {
 
-    @Query("select p from Port p where (:name is null or p.portName =:name) and (:value is null or p.numberOfGuestBerths >= :value)")
+    @Query("select p from Port p where (:name is null or p.portName =:name) and (:value is null or p.numberOfGuestBerths >= :value) order by p.portName ASC")
     List<Port> findAllByOptionalOfNameAndNumberOfBerths(@Param("name") Optional<String> name, @Param("value") Optional<Integer> value);
 
 }

@@ -15,13 +15,14 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@Transactional
+
 public class BerthBookingService {
 
     private static final LocalDate OPENING_DATE = LocalDate.of(LocalDate.now().getYear(), Month.APRIL, 1);
@@ -57,6 +58,7 @@ public class BerthBookingService {
         }
     }
 
+    @Transactional
     public PortDto updatePortEmailAndNumberOfBerths(long id, UpdatePortCommand command) {
         Port port = portRepository.findById(id).orElseThrow(() -> new PortNotFoundException(id));
         port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
@@ -64,6 +66,7 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
+    @Transactional
     public PortDto addBerthToPort(long id, CreateBerthCommand command) {
         Port port = portRepository.findById(id).orElseThrow(() -> new PortNotFoundException(id));
         Berth berth = new Berth(command.getCode(), command.getLength(), command.getWidth(), command.getBerthType());
@@ -76,13 +79,17 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public List<BerthDto> getAllBerths() {
-        List<Berth> berths = berthRepository.findAll();
+    public List<BerthDto> getAllBerths(Optional<Integer> width, Optional<String> portName) {
+        List<Berth> berths = berthRepository.findAllBerthsByPortIdAndWidth(width, portName);
         return berths.stream().map(berth -> modelMapper.map(berth, BerthDto.class)).collect(Collectors.toList());
     }
 
-    public BerthDto getBerthById(Long berthId) {
+    public BerthDto getBerthById(Long berthId, Optional<String> sort) {
         Berth berth = berthRepository.findById(berthId).orElseThrow(() -> new BerthNotFoundException(berthId));
+        if (sort.isPresent() && sort.get().equals("date")) {
+            List<Booking> bookingsOrdered = berth.getBookings().stream().sorted(Comparator.comparing(Booking::getFromDate)).toList();
+            berth.setBookings(bookingsOrdered);
+        }
         return modelMapper.map(berth, BerthDto.class);
     }
 
@@ -93,7 +100,7 @@ public class BerthBookingService {
             throw new BerthNotFoundException(id);
         }
     }
-
+    @Transactional
     public BerthDto updateBerthById(long id, UpdateBerthCommand command) {
         Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
         berth.setCode(command.getCode());
@@ -103,6 +110,7 @@ public class BerthBookingService {
         return modelMapper.map(berth, BerthDto.class);
     }
 
+    @Transactional
     public BerthDto addBookingToBerthById(long id, BookingCommand command) {
         Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
         checkConditions(berth, command);

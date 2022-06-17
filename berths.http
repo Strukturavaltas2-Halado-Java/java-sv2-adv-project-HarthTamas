@@ -13,13 +13,13 @@ DELETE http://localhost:8080/api/berths/20
 Accept: application/json
 ###
 
-PUT http://localhost:8080/api/berths/21
+PUT http://localhost:8080/api/berths/15
 Content-Type: application/json
 Accept: application/json
 
 {
   "code": "V01",
-  "length": 800,
+  "length": 810,
   "width": 320,
   "berthType": "POWER_WATER_WIFI"
 }
@@ -33,9 +33,25 @@ Accept: application/json
   "boatName": "Flyer",
   "registrationNumber": "h45445",
   "boatLength":700,
-  "boatWidth": 3190,
-  "fromDate": "2022-09-12",
-  "numberOfDays": 1
+  "boatWidth": 265,
+  "fromDate": "2022-09-13",
+  "numberOfDays":3
 }
+
+###
+GET http://localhost:8080/api/berths?width=380&portName=badacsony
+Accept: application/json
+
+###
+GET http://localhost:8080/api/berths?portName=badacsony
+Accept: application/json
+
+###
+GET http://localhost:8080/api/berths?width=380
+Accept: application/json
+
+###
+GET http://localhost:8080/api/berths
+Accept: application/json
 
 ###

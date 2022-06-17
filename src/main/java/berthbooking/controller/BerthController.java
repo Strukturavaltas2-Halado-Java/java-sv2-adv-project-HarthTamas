@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -20,13 +21,13 @@ public class BerthController {
 
 
     @GetMapping()
-    public List<BerthDto> getAllBerths() {
-        return service.getAllBerths();
+    public List<BerthDto> getAllBerths(@RequestParam Optional<Integer> width, @RequestParam Optional<String> portName) {
+        return service.getAllBerths(width, portName);
     }
 
     @GetMapping("/{id}")
-    public BerthDto getBerthById(@PathVariable("id") long berthId) {
-        return service.getBerthById(berthId);
+    public BerthDto getBerthById(@PathVariable("id") long berthId, @RequestParam Optional<String>sort) {
+        return service.getBerthById(berthId, sort);
     }
 
     @DeleteMapping("/{id}")
@@ -45,10 +46,6 @@ public class BerthController {
     public BerthDto addBookingToBerthById(@PathVariable("id") long id, @Valid @RequestBody BookingCommand command) {
         return service.addBookingToBerthById(id, command);
     }
-
-
-
-
 
 
 }
