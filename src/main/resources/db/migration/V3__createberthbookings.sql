@@ -7,7 +7,7 @@ CREATE TABLE berth_bookings
     boat_width      INT          NULL,
     time_of_booking datetime     NULL,
     from_date       date         NULL,
-    nr_of_day       INT          NULL
+    nr_of_days       INT          NULL
 );
 
 ALTER TABLE berth_bookings

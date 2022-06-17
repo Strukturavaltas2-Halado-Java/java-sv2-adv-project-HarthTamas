@@ -59,9 +59,8 @@ public class BerthBookingService {
     }
 
     @Transactional
-    public PortDto updatePortEmailAndNumberOfBerths(long id, UpdatePortCommand command) {
+    public PortDto updatePortEmail(long id, UpdatePortCommand command) {
         Port port = portRepository.findById(id).orElseThrow(() -> new PortNotFoundException(id));
-        port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
         port.setEmail(command.getEmail());
         return modelMapper.map(port, PortDto.class);
     }
@@ -111,7 +110,7 @@ public class BerthBookingService {
     }
 
     @Transactional
-    public BerthDto addBookingToBerthById(long id, BookingCommand command) {
+    public BerthDto addBookingToBerthById(long id, CreateBookingCommand command) {
         Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
         checkConditions(berth, command);
         Booking booking = new Booking(command.getBoatName(), command.getRegistrationNumber(),
@@ -121,20 +120,20 @@ public class BerthBookingService {
         return modelMapper.map(berth, BerthDto.class);
     }
 
-    private void checkConditions(Berth berth, BookingCommand command) {
+    private void checkConditions(Berth berth, CreateBookingCommand command) {
         isStartDateInTheFuture(command);
         isBookingInActualYearsSeason(command);
         isBoatSmallerThanBerth(berth, command);
         isBookingTimeFree(berth, command);
     }
 
-    private void isBoatSmallerThanBerth(Berth berth, BookingCommand command) {
+    private void isBoatSmallerThanBerth(Berth berth, CreateBookingCommand command) {
         if (command.getBoatWidth() >= berth.getWidth() || command.getBoatLength() >= berth.getLength()) {
             throw new BoatSizeException(berth.getId());
         }
     }
 
-    private void isBookingTimeFree(Berth berth, BookingCommand command) {
+    private void isBookingTimeFree(Berth berth, CreateBookingCommand command) {
         LocalDate startDate = command.getFromDate();
         LocalDate endDate = command.getFromDate().plusDays(command.getNumberOfDays());
         for (Booking actual : berth.getBookings()) {
@@ -146,13 +145,13 @@ public class BerthBookingService {
         }
     }
 
-    private void isStartDateInTheFuture(BookingCommand command) {
+    private void isStartDateInTheFuture(CreateBookingCommand command) {
         if (command.getFromDate().isBefore(LocalDate.now())) {
             throw new IllegalStartDateException(command.getFromDate());
         }
     }
 
-    private void isBookingInActualYearsSeason(BookingCommand command) {
+    private void isBookingInActualYearsSeason(CreateBookingCommand command) {
         if (command.getFromDate().isBefore(OPENING_DATE) || command.getFromDate().isAfter(CLOSING_DATE.minusDays(command.getNumberOfDays() - 1))) {
             throw new OutOfActualYearsSeasonException(command.getFromDate());
         }

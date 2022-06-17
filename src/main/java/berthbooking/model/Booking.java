@@ -36,7 +36,7 @@ public class Booking {
     @Column(name="from_date")
     private LocalDate fromDate;
 
-    @Column(name="nr_of_day")
+    @Column(name="nr_of_days")
     private int numberOfDays;
 
 

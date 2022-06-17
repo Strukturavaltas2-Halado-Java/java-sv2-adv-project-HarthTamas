@@ -1,7 +1,7 @@
 package berthbooking.controller;
 
 import berthbooking.dtos.BerthDto;
-import berthbooking.dtos.BookingCommand;
+import berthbooking.dtos.CreateBookingCommand;
 import berthbooking.dtos.UpdateBerthCommand;
 import berthbooking.service.BerthBookingService;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ public class BerthController {
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public BerthDto addBookingToBerthById(@PathVariable("id") long id, @Valid @RequestBody BookingCommand command) {
+    public BerthDto addBookingToBerthById(@PathVariable("id") long id, @Valid @RequestBody CreateBookingCommand command) {
         return service.addBookingToBerthById(id, command);
     }
 

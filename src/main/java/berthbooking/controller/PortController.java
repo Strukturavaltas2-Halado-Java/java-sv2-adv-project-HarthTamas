@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class PortController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PortDto createPort(@RequestBody CreatePortCommand command) {
+    public PortDto createPort(@Valid @RequestBody CreatePortCommand command) {
         return service.createPort(command);
     }
 
@@ -29,7 +30,7 @@ public class PortController {
 
     @GetMapping
     public List<PortDto> getPorts(@RequestParam Optional<String> name, @RequestParam Optional<Integer> value) {
-        return service.getPorts(name,value);
+        return service.getPorts(name, value);
     }
 
     @DeleteMapping("/{id}")
@@ -39,13 +40,13 @@ public class PortController {
     }
 
     @PutMapping("/{id}")
-    public PortDto updatePortEmailAndNumberOfBerths(@PathVariable("id") Long id, @RequestBody UpdatePortCommand command) {
-        return service.updatePortEmailAndNumberOfBerths(id, command);
+    public PortDto updatePortEmail(@PathVariable("id") Long id, @Valid @RequestBody UpdatePortCommand command) {
+        return service.updatePortEmail(id, command);
     }
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PortDto addBerthToPort(@PathVariable("id") Long id, @RequestBody CreateBerthCommand command) {
+    public PortDto addBerthToPort(@PathVariable("id") Long id, @Valid @RequestBody CreateBerthCommand command) {
         return service.addBerthToPort(id, command);
     }
 }
