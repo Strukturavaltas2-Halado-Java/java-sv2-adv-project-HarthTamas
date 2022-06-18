@@ -10,7 +10,7 @@ public class OutOfActualYearsSeasonException extends AbstractThrowableProblem {
     public OutOfActualYearsSeasonException(LocalDate fromDate) {
         super(URI.create("/berths/requested-date-is-out-of-actual-years-season"),
                 "Requested date is out of actual year's season",
-                Status.NOT_ACCEPTABLE,
+                Status.BAD_REQUEST,
                 String.format("Requested date (%s) is out of actual year's season", fromDate));
     }
 }

@@ -9,7 +9,7 @@ public class BoatSizeException extends AbstractThrowableProblem {
     public BoatSizeException(long id) {
         super(URI.create("/berths/berth-size-is-too-small-for-boat"),
                 "Berth size is too small for this boat",
-                Status.NOT_ACCEPTABLE,
-        String.format("Berth (id: %d) is too small for this boat",id));
+                Status.BAD_REQUEST,
+                String.format("Berth (id: %d) is too small for this boat", id));
     }
 }

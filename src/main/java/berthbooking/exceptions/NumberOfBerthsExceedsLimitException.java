@@ -9,7 +9,7 @@ public class NumberOfBerthsExceedsLimitException extends AbstractThrowableProble
     public NumberOfBerthsExceedsLimitException(Long portId, int numberOfGuestBerths) {
         super(URI.create("/api/ports/berths-exceed-limit"),
                 "Number of berths exceeds limit",
-                Status.NOT_ACCEPTABLE,
+                Status.BAD_REQUEST,
                 String.format("Number of berths exceeds limit(%d) at port with id: %d",numberOfGuestBerths,portId));
     }
 }
