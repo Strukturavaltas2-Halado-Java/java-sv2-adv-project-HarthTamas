@@ -86,15 +86,13 @@ public class BerthBookingService {
 
     public List<BerthDto> getAllBerths(Optional<Integer> width, Optional<String> portName) {
         List<Berth> berths = berthRepository.findAllBerthsByPortIdAndWidth(width, portName);
+        berths.stream().forEach(berth -> sortBookings(berth));
         return berths.stream().map(berth -> modelMapper.map(berth, BerthDto.class)).collect(Collectors.toList());
     }
 
-    public BerthDto getBerthById(Long berthId, Optional<String> sort) {
+    public BerthDto getBerthById(Long berthId) {
         Berth berth = berthRepository.findById(berthId).orElseThrow(() -> new BerthNotFoundException(berthId));
-        if (sort.isPresent() && sort.get().equals("date")) {
-            List<Booking> bookingsOrdered = berth.getBookings().stream().sorted(Comparator.comparing(Booking::getFromDate)).toList();
-            berth.setBookings(bookingsOrdered);
-        }
+        sortBookings(berth);
         return modelMapper.map(berth, BerthDto.class);
     }
 
@@ -155,6 +153,11 @@ public class BerthBookingService {
         if (command.getFromDate().isBefore(OPENING_DATE) || command.getFromDate().isAfter(CLOSING_DATE.minusDays(command.getNumberOfDays() - 1))) {
             throw new OutOfActualYearsSeasonException(command.getFromDate());
         }
+    }
+
+    private void sortBookings(Berth berth) {
+        List<Booking> bookingsOrdered = berth.getBookings().stream().sorted(Comparator.comparing(Booking::getFromDate)).toList();
+        berth.setBookings(bookingsOrdered);
     }
 
 

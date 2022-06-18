@@ -26,13 +26,13 @@ public class BerthController {
     }
 
     @GetMapping("/{id}")
-    public BerthDto getBerthById(@PathVariable("id") long berthId, @RequestParam Optional<String>sort) {
-        return service.getBerthById(berthId, sort);
+    public BerthDto getBerthById(@PathVariable("id") long berthId) {
+        return service.getBerthById(berthId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBethById(@PathVariable("id") long id) {
+    public void deleteBerthById(@PathVariable("id") long id) {
         service.deleteBerthById(id);
     }
 
@@ -41,7 +41,7 @@ public class BerthController {
         return service.updateBerthById(id, command);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/bookings")
     @ResponseStatus(HttpStatus.CREATED)
     public BerthDto addBookingToBerthById(@PathVariable("id") long id, @Valid @RequestBody CreateBookingCommand command) {
         return service.addBookingToBerthById(id, command);
