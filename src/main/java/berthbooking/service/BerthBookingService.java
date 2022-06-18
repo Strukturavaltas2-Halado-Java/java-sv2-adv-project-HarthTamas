@@ -62,7 +62,7 @@ public class BerthBookingService {
     public PortDto updatePortNumberOfGuestBerths(Long id, UpdatePortCommand command) {
         Port port = portRepository.findById(id).orElseThrow(() -> new PortNotFoundException(id));
         long berthsWithBookings = port.getBerths().stream().filter(berth -> berth.getBookings().size() > 0).count();
-        if (command.getNumberOfGuestBerths() > berthsWithBookings) {
+        if (command.getNumberOfGuestBerths() >= berthsWithBookings) {
             port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
         } else {
             throw  new RequestedNumberOfGuestBerthsIsLessThaneBookedBerthsException(berthsWithBookings, command.getNumberOfGuestBerths());

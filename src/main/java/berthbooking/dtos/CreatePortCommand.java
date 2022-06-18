@@ -19,6 +19,6 @@ public class CreatePortCommand {
     @Email(message = "Must be a valid email format!")
     private String email;
 
-    @Positive(message = "The number of guest berths must be positive number!")
+    @PositiveOrZero(message = "The number of guest berths must be positive or zero!")
     private int numberOfGuestBerths;
 }

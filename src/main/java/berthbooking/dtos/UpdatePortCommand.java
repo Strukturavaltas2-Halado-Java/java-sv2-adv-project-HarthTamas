@@ -13,7 +13,7 @@ import javax.validation.constraints.PositiveOrZero;
 @AllArgsConstructor
 public class UpdatePortCommand {
 
-    @PositiveOrZero(message = "The number of guest berths must be positive number!")
+    @PositiveOrZero(message = "The number of guest berths must be positive or zero!")
     private int numberOfGuestBerths;
 
 }

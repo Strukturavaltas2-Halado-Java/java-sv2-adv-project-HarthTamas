@@ -49,4 +49,6 @@ public class PortController {
     public PortDto addBerthToPort(@PathVariable("id") Long id, @Valid @RequestBody CreateBerthCommand command) {
         return service.addBerthToPort(id, command);
     }
+
+
 }
