@@ -10,6 +10,6 @@ public class BookingTimeConflictException extends AbstractThrowableProblem {
         super(URI.create("/berths/requested-booking-time-is-already-taken"),
                 "Requested booking time period is already taken",
                 Status.BAD_REQUEST,
-                String.format("Berth (id: %d) is already taken in the requested time period",id));
+                String.format("Berth (id: %d) is already booked in the requested time period",id));
     }
 }

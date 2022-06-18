@@ -10,6 +10,6 @@ public class BerthNotFoundException extends AbstractThrowableProblem {
         super(URI.create("/berth-not-found"),
                 "Bert not found",
                 Status.NOT_FOUND,
-                String.format("Bert not found with %d id",berthId));
+                String.format("Berth not found with %d id",berthId));
     }
 }
