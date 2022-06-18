@@ -40,8 +40,8 @@ public class PortController {
     }
 
     @PutMapping("/{id}")
-    public PortDto updatePortEmail(@PathVariable("id") Long id, @Valid @RequestBody UpdatePortCommand command) {
-        return service.updatePortEmail(id, command);
+    public PortDto updatePortNumberOfGuestBerths(@PathVariable("id") Long id, @Valid @RequestBody UpdatePortCommand command) {
+        return service.updatePortNumberOfGuestBerths(id, command);
     }
 
     @PostMapping("/{id}")

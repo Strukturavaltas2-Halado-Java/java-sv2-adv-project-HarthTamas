@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
@@ -15,7 +13,7 @@ import javax.validation.constraints.PositiveOrZero;
 @AllArgsConstructor
 public class UpdatePortCommand {
 
-    @Email(message = "Must be a valid email format!")
-    private String email;
+    @PositiveOrZero(message = "The number of guest berths must be positive number!")
+    private int numberOfGuestBerths;
 
 }

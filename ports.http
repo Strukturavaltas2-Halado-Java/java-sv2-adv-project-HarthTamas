@@ -35,7 +35,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-"email":"abs@other.com"
+  "numberOfGuestBerths": 2
 }
 
 ###
@@ -50,7 +50,7 @@ Accept: application/json
 
 {
   "code": "K12",
-  "length": 111,
+  "length": 1110,
   "width": 320,
   "berthType": "POWER_WATER"
 }

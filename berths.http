@@ -25,7 +25,7 @@ Accept: application/json
 }
 ###
 
-POST http://localhost:8080/api/berths/6
+POST http://localhost:8080/api/berths/1
 Content-Type: application/json
 Accept: application/json
 
@@ -34,7 +34,7 @@ Accept: application/json
   "registrationNumber": "h45445",
   "boatLength":620,
   "boatWidth": 150,
-  "fromDate": "2022-06-17",
+  "fromDate": "2022-07-17",
   "numberOfDays":3
 }
 

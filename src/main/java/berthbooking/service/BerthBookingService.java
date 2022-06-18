@@ -59,11 +59,17 @@ public class BerthBookingService {
     }
 
     @Transactional
-    public PortDto updatePortEmail(long id, UpdatePortCommand command) {
+    public PortDto updatePortNumberOfGuestBerths(Long id, UpdatePortCommand command) {
         Port port = portRepository.findById(id).orElseThrow(() -> new PortNotFoundException(id));
-        port.setEmail(command.getEmail());
+        long berthsWithBookings = port.getBerths().stream().filter(berth -> berth.getBookings().size() > 0).count();
+        if (command.getNumberOfGuestBerths() > berthsWithBookings) {
+            port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
+        } else {
+            throw  new RequestedNumberOfGuestBerthsIsLessThaneBookedBerthsException(berthsWithBookings, command.getNumberOfGuestBerths());
+        }
         return modelMapper.map(port, PortDto.class);
     }
+
 
     @Transactional
     public PortDto addBerthToPort(long id, CreateBerthCommand command) {
@@ -99,6 +105,7 @@ public class BerthBookingService {
             throw new BerthNotFoundException(id);
         }
     }
+
     @Transactional
     public BerthDto updateBerthById(long id, UpdateBerthCommand command) {
         Berth berth = berthRepository.findById(id).orElseThrow(() -> new BerthNotFoundException(id));
@@ -149,4 +156,6 @@ public class BerthBookingService {
             throw new OutOfActualYearsSeasonException(command.getFromDate());
         }
     }
+
+
 }
