@@ -96,7 +96,9 @@ Az attributumok validálását a Spring Bootra bíztam.
 
 ## Technológiai részletek
 
-A Berthbooking egy három rétegű alkalmazás, amely Docker konténerben futtatható, és a 8080-as porton érhetjük el a fent részletezett funkcióit.
+A Berthbooking egy három rétegű alkalmazás, amely Docker konténerben futtatható. 
+
+### Rétegek:
 
 A controller rétegben van implementálva a RESTful API, itt vannak definiálva a végpontok, és hozzájuk rendelve a megfelelő HTTP metódusok.
 kihasználva azt, hogy a Spring Boot beépítetten tartalmaz Bean Validation 2.0 támogatást, a controller réteg felel az attributumok validációjáért is.
@@ -104,6 +106,6 @@ Az alkalmazáshoz a SWAGGER UI biztosít API dokumentációt, és lehetőséget 
 
 A service réteg közvetíti a controll réteg felől érkező kéréseket a Repository réteg felé, és vissza, figyelve a DTOk-entitássá és vissza alakítására, hogy entitás sose kerülhessen vissza a controll rétegbe.  Szintén ebben a rétegben van implementálva az üzleti logika megvalósítása is. Ezek az entitásokhoz tartozó végpontok alatt lettek kifejtve .
 
-A repository réteg Spring Data JPA-val van megvalósítva, és egy Maria DB adatbázishoz kapcsolódik. Maga az adatbázis külön konténerben fut, és a 3306-os porton érhető el. A sémák inicializálását a Flyway végzi. 
+A repository réteg Spring Data JPA-val van megvalósítva, a sémák inicializálását pedg a Flyway végzi el. Maga az adatbázis egy külön konterben futó Maria DB adatbázis.
 
 ---
