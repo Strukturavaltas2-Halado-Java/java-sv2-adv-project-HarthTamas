@@ -43,8 +43,8 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public List<PortDto> getPorts(Optional<String> name, Optional<Integer> value) {
-        List<Port> ports = portRepository.findAllByOptionalOfNameAndNumberOfBerths(name, value);
+    public List<PortDto> getPorts(Optional<String> name, Optional<Integer> capacity) {
+        List<Port> ports = portRepository.findAllByOptionalOfNameAndNumberOfBerths(name, capacity);
         return ports.stream().map(port -> modelMapper.map(port, PortDto.class))
                 .collect(Collectors.toList());
     }

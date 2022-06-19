@@ -29,8 +29,8 @@ public class PortController {
     }
 
     @GetMapping
-    public List<PortDto> getPorts(@RequestParam Optional<String> name, @RequestParam Optional<Integer> value) {
-        return service.getPorts(name, value);
+    public List<PortDto> getPorts(@RequestParam Optional<String> name, @RequestParam Optional<Integer> capacity) {
+        return service.getPorts(name, capacity);
     }
 
     @DeleteMapping("/{id}")
