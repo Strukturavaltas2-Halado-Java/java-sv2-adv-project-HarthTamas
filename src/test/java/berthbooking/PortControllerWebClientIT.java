@@ -14,8 +14,7 @@ import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.*;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,6 +44,9 @@ public class PortControllerWebClientIT {
 
     @BeforeEach
     void init() {
+        Clock clock = Clock.fixed(Instant.parse("2022-04-01T00:00:00.00Z"), ZoneId.of("UTC"));
+        LocalDate date = LocalDate.now(clock);
+
         portSzemes = service.createPort(new CreatePortCommand("Balatonszemes", "balatonszemes@balaport.hu", 4));
         portBadacsony = service.createPort(new CreatePortCommand("Badacsony", "badacsony@balaport.hu", 8));
         portSzigliget = service.createPort(new CreatePortCommand("Szigliget", "szigliget@balaport.hu", 2));
@@ -474,6 +476,15 @@ public class PortControllerWebClientIT {
                         .expectBody(Problem.class)
                         .returnResult().getResponseBody();
         assertThat(p.getDetail()).isEqualTo("Berth (id: "+berthKesztBase.getId()+") is already booked in the requested time period");
+    }
+
+    @Test
+    public void givenFixedClock_whenNow_thenGetFixedLocalDateTime() {
+        System.out.println(LocalDate.now());
+        Clock clock = Clock.fixed(Instant.parse("2022-04-01T00:00:00.00Z"), ZoneId.of("UTC"));
+
+        LocalDate date = LocalDate.now(clock);
+        System.out.println(date);
     }
 
 }
