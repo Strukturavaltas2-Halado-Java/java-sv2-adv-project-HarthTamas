@@ -4,6 +4,10 @@ import berthbooking.dtos.BerthDto;
 import berthbooking.dtos.CreateBookingCommand;
 import berthbooking.dtos.UpdateBerthCommand;
 import berthbooking.service.BerthBookingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,35 +19,46 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/berths")
+@Tag(name = "Operations on berths")
 public class BerthController {
 
     private BerthBookingService service;
 
 
     @GetMapping()
-    public List<BerthDto> getAllBerthsWithParameters(@RequestParam Optional<Integer> width, @RequestParam Optional<String> portName) {
+    @Operation(summary = "Find berths", description = "Find berths")
+    public List<BerthDto> getAllBerthsWithParameters(@Parameter(description = "Width of the berth", example = "240") @RequestParam Optional<Integer> width,
+                                                     @Parameter(description = "Name of the port", example = "Keszthely")@RequestParam Optional<String> portName) {
         return service.getAllBerthsWithParameters(width, portName);
     }
 
     @GetMapping("/{id}")
-    public BerthDto getBerthById(@PathVariable("id") long berthId) {
+    @Operation(summary = "Find berth by id", description = "Find berth by id.")
+    @ApiResponse(responseCode = "404", description = "Berth not found")
+    public BerthDto getBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long berthId) {
         return service.getBerthById(berthId);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete berth by id", description = "Delete berth by id.")
+    @ApiResponse(responseCode = "404", description = "Berth not found")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBerthById(@PathVariable("id") long id) {
+    public void deleteBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id) {
         service.deleteBerthById(id);
     }
 
     @PutMapping("/{id}")
-    public BerthDto updateBerthById(@PathVariable("id") long id, @Valid @RequestBody UpdateBerthCommand command) {
+    @Operation(summary = "Update berth by id", description = "Update berth by id.")
+    @ApiResponse(responseCode = "404", description = "Berth not found")
+    public BerthDto updateBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id, @Valid @RequestBody UpdateBerthCommand command) {
         return service.updateBerthById(id, command);
     }
 
     @PostMapping("/{id}/bookings")
     @ResponseStatus(HttpStatus.CREATED)
-    public BerthDto addBookingToBerthById(@PathVariable("id") long id, @Valid @RequestBody CreateBookingCommand command) {
+    @Operation(summary = "Creates a booking")
+    @ApiResponse(responseCode = "201", description = "Booking has been created")
+    public BerthDto addBookingToBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id, @Valid @RequestBody CreateBookingCommand command) {
         return service.addBookingToBerthById(id, command);
     }
 
