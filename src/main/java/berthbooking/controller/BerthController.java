@@ -21,8 +21,8 @@ public class BerthController {
 
 
     @GetMapping()
-    public List<BerthDto> getAllBerths(@RequestParam Optional<Integer> width, @RequestParam Optional<String> portName) {
-        return service.getAllBerths(width, portName);
+    public List<BerthDto> getAllBerthsWithParameters(@RequestParam Optional<Integer> width, @RequestParam Optional<String> portName) {
+        return service.getAllBerthsWithParameters(width, portName);
     }
 
     @GetMapping("/{id}")

@@ -84,8 +84,8 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public List<BerthDto> getAllBerths(Optional<Integer> width, Optional<String> portName) {
-        List<Berth> berths = berthRepository.findAllBerthsByPortIdAndWidth(width, portName);
+    public List<BerthDto> getAllBerthsWithParameters(Optional<Integer> width, Optional<String> portName) {
+        List<Berth> berths = berthRepository.findAllBerthsByPortNameAndWidth(width, portName);
         berths.stream().forEach(berth -> sortBookings(berth));
         return berths.stream().map(berth -> modelMapper.map(berth, BerthDto.class)).collect(Collectors.toList());
     }

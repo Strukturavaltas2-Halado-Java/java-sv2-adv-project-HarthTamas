@@ -1,6 +1,5 @@
 package berthbooking.dtos;
 
-import berthbooking.model.Berth;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

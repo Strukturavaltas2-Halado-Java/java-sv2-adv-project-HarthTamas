@@ -44,7 +44,7 @@ public class PortController {
         return service.updatePortNumberOfGuestBerths(id, command);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/berths")
     @ResponseStatus(HttpStatus.CREATED)
     public PortDto addBerthToPort(@PathVariable("id") Long id, @Valid @RequestBody CreateBerthCommand command) {
         return service.addBerthToPort(id, command);

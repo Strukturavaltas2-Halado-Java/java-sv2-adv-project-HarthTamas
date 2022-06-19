@@ -109,7 +109,7 @@ public class PortControllerWebClientIT {
     @Test
     void testGetPortsWithMinNumberOfBerths() {
         List<PortDto> result = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("value", 6).build())
+                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("capacity", 6).build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(PortDto.class)
@@ -120,7 +120,7 @@ public class PortControllerWebClientIT {
     @Test
     void testGetPortsWithNameAndMinNumberOfBerths() {
         List<PortDto> result = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("value", 6).queryParam("name", "Badacsony").build())
+                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("capacity", 6).queryParam("name", "Badacsony").build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(PortDto.class)
@@ -160,7 +160,7 @@ public class PortControllerWebClientIT {
     @Test
     void testAddBerthToPort() {
         PortDto result = webTestClient.post()
-                .uri(uriBuilder -> uriBuilder.path("api/ports/{id}").build(portSzemes.getId()))
+                .uri(uriBuilder -> uriBuilder.path("api/ports/{id}/berths").build(portSzemes.getId()))
                 .bodyValue(new CreateBerthCommand("Wifi-01", 1_100, 300, BerthType.POWER_WATER_WIFI))
                 .exchange()
                 .expectBody(PortDto.class)
@@ -260,7 +260,7 @@ public class PortControllerWebClientIT {
     void testAddBerthToPortWithInvalidValues() {
         ConstraintViolationProblem cvp =
                 webTestClient.post()
-                        .uri(uriBuilder -> uriBuilder.path("api/ports/{id}").build(portSzigliget.getId()))
+                        .uri(uriBuilder -> uriBuilder.path("api/ports/{id}/berths").build(portSzigliget.getId()))
                         .bodyValue(new CreateBerthCommand("", 0, -1, BerthType.POWER_WATER_WIFI))
                         .exchange()
                         .expectBody(ConstraintViolationProblem.class)
@@ -402,13 +402,13 @@ public class PortControllerWebClientIT {
     @Test
     void testAddTooManyBerthsToPort() {
         webTestClient.post()
-                .uri("api/ports/{id}", portSzigliget.getId())
+                .uri("api/ports/{id}/berths", portSzigliget.getId())
                 .bodyValue(new CreateBerthCommand("PW-02", 1_200, 350, BerthType.POWER_WATER))
                 .exchange()
                 .expectStatus().isCreated();
 
         Problem p = webTestClient.post()
-                .uri("api/ports/{id}", portSzigliget.getId())
+                .uri("api/ports/{id}/berths", portSzigliget.getId())
                 .bodyValue(new CreateBerthCommand("PW-04", 1_100, 290, BerthType.POWER_WATER_WIFI))
                 .exchange()
                 .expectBody(Problem.class)

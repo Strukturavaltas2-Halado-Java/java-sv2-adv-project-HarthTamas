@@ -2,7 +2,6 @@ package berthbooking.dtos;
 
 import berthbooking.model.BerthType;
 import berthbooking.model.Booking;
-import berthbooking.model.Port;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

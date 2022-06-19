@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface BerthRepository extends JpaRepository<Berth, Long> {
 
     @Query("select b from Berth b where (:width is null or b.width >= :width) and (:portName is null or b.port.portName = :portName) order by b.code ASC")
-    List<Berth> findAllBerthsByPortIdAndWidth(Optional<Integer> width, Optional<String> portName);
+    List<Berth> findAllBerthsByPortNameAndWidth(Optional<Integer> width, Optional<String> portName);
 }
