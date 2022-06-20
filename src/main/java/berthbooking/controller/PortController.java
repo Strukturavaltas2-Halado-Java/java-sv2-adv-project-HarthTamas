@@ -40,9 +40,9 @@ public class PortController {
     @GetMapping
     @Operation(summary = "Find ports")
     @ApiResponse(responseCode = "404", description = "Ports not found")
-    public List<PortDto> getPorts(@Parameter(description = "Name of the port", example = "Keszthely") @RequestParam Optional<String> name,
+    public List<PortDto> getPorts(@Parameter(description = "Name of the town where port is located", example = "Keszthely") @RequestParam Optional<String> town,
                                   @Parameter(description = "Number of minimum guest berths", example = "1") @RequestParam Optional<Integer> capacity) {
-        return service.getPorts(name, capacity);
+        return service.getPorts(town, capacity);
     }
 
     @DeleteMapping("/{id}")

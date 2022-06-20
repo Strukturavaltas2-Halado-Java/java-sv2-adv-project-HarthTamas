@@ -6,7 +6,7 @@ Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kikötő nevére
-GET http://localhost:8080/api/berths?portName=badacsony
+GET http://localhost:8080/api/berths?town=badacsony
 Accept: application/json
 
 ###
@@ -18,7 +18,7 @@ Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kikötő nevére és kikötőhely szélességre
-GET http://localhost:8080/api/berths?width=310&portName=badacsony
+GET http://localhost:8080/api/berths?width=310&town=badacsony
 Accept: application/json
 
 ###

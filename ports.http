@@ -4,7 +4,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "portName": "Badacsony",
+  "town": "Badacsony",
   "email": "badacsony@balaport.hu",
   "numberOfGuestBerths": 6
 }
@@ -23,7 +23,7 @@ Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kikötő nevére
-GET http://localhost:8080/api/ports?name=badacsony
+GET http://localhost:8080/api/ports?town=badacsony
 Accept: application/json
 ###
 
@@ -33,7 +33,7 @@ Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kikötő nevére és kapacitásra
-GET http://localhost:8080/api/ports?capacity=3&name=badacsony
+GET http://localhost:8080/api/ports?capacity=3&town=badacsony
 Accept: application/json
 
 ###

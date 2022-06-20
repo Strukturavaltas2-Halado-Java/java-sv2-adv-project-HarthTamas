@@ -22,15 +22,9 @@ public class Port {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Port(String portName, String email, int numberOfGuestBerths) {
-        this.portName = portName;
-        this.email = email;
-        this.numberOfGuestBerths = numberOfGuestBerths;
-    }
 
-
-    @Column(name="port_name")
-    private String portName;
+    @Column(name="town")
+    private String town;
 
     private String email;
 
@@ -40,6 +34,13 @@ public class Port {
     @OneToMany(mappedBy = "port", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Berth> berths = new ArrayList<>();
+
+
+    public Port(String town, String email, int numberOfGuestBerths) {
+        this.town = town;
+        this.email = email;
+        this.numberOfGuestBerths = numberOfGuestBerths;
+    }
 
     public void addBerth(Berth berth) {
         berths.add(berth);

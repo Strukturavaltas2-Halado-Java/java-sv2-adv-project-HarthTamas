@@ -33,7 +33,7 @@ public class BerthBookingService {
     private ModelMapper modelMapper;
 
     public PortDto createPort(CreatePortCommand command) {
-        Port port = new Port(command.getPortName(), command.getEmail(), command.getNumberOfGuestBerths());
+        Port port = new Port(command.getTown(), command.getEmail(), command.getNumberOfGuestBerths());
         portRepository.save(port);
         return modelMapper.map(port, PortDto.class);
     }
@@ -43,8 +43,8 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public List<PortDto> getPorts(Optional<String> name, Optional<Integer> capacity) {
-        List<Port> ports = portRepository.findAllByOptionalOfNameAndNumberOfBerths(name, capacity);
+    public List<PortDto> getPorts(Optional<String> town, Optional<Integer> capacity) {
+        List<Port> ports = portRepository.findAllByOptionalOfTownAndNumberOfBerths(town, capacity);
         return ports.stream().map(port -> modelMapper.map(port, PortDto.class))
                 .collect(Collectors.toList());
     }
@@ -84,9 +84,9 @@ public class BerthBookingService {
         return modelMapper.map(port, PortDto.class);
     }
 
-    public List<BerthDto> getAllBerthsWithParameters(Optional<Integer> width, Optional<String> portName) {
-        List<Berth> berths = berthRepository.findAllBerthsByPortNameAndWidth(width, portName);
-        berths.stream().forEach(berth -> sortBookings(berth));
+    public List<BerthDto> getAllBerthsWithParameters(Optional<Integer> width, Optional<String> town) {
+        List<Berth> berths = berthRepository.findAllBerthsByTownNameAndWidth(width, town);
+        berths.stream().forEach(this::sortBookings);
         return berths.stream().map(berth -> modelMapper.map(berth, BerthDto.class)).collect(Collectors.toList());
     }
 

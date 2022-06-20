@@ -15,9 +15,9 @@ import javax.validation.constraints.*;
 public class CreatePortCommand {
 
     @NotNull
-    @Schema(description="Name of the Port", example = "Keszthely")
+    @Schema(description="Name of the town where port is located", example = "Keszthely")
     @NotBlank(message = "Ports must have a name!")
-    private String portName;
+    private String town;
 
     @NotNull
     @Schema(description="Email of the port", example = "keszthely@balaport.hu")

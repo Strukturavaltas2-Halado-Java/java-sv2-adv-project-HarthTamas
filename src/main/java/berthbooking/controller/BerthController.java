@@ -28,8 +28,8 @@ public class BerthController {
     @GetMapping()
     @Operation(summary = "Find berths", description = "Find berths")
     public List<BerthDto> getAllBerthsWithParameters(@Parameter(description = "Width of the berth", example = "240") @RequestParam Optional<Integer> width,
-                                                     @Parameter(description = "Name of the port", example = "Keszthely")@RequestParam Optional<String> portName) {
-        return service.getAllBerthsWithParameters(width, portName);
+                                                     @Parameter(description = "Name of the town where port is located", example = "Keszthely")@RequestParam Optional<String> town) {
+        return service.getAllBerthsWithParameters(width, town);
     }
 
     @GetMapping("/{id}")

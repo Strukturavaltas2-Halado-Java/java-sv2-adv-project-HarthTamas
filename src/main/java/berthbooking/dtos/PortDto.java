@@ -20,8 +20,8 @@ public class PortDto {
     private Long id;
 
     @NotNull
-    @Schema(description="Name of the Port", example = "Keszthely")
-    private String portName;
+    @Schema(description="Name of the town where port is located", example = "Keszthely")
+    private String town;
 
     @NotNull
     @Schema(description="Email of the port", example = "keszthely@balaport.hu")
@@ -33,8 +33,8 @@ public class PortDto {
 
     private List<BerthDto> berths = new ArrayList<>();
 
-    public PortDto(String portName, String email, int numberOfGuestBerths) {
-        this.portName = portName;
+    public PortDto(String town, String email, int numberOfGuestBerths) {
+        this.town = town;
         this.email = email;
         this.numberOfGuestBerths = numberOfGuestBerths;
     }
@@ -44,11 +44,11 @@ public class PortDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PortDto portDto = (PortDto) o;
-        return numberOfGuestBerths == portDto.numberOfGuestBerths && Objects.equals(portName, portDto.portName) && Objects.equals(email, portDto.email);
+        return numberOfGuestBerths == portDto.numberOfGuestBerths && Objects.equals(town, portDto.town) && Objects.equals(email, portDto.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(portName, email, numberOfGuestBerths);
+        return Objects.hash(town, email, numberOfGuestBerths);
     }
 }
