@@ -7,7 +7,7 @@ A balatonon túravitorlázni sokak számára kellemes kikapcsolódást jelent, d
 
 A kikötök üzemeltetői szempontjából a problémát többek között az okozza, hogy a kikötőhelyek közel 100%-a éves szerződésekkel van lekötve, a más anyakikötőkből érkező hajóknak csak néhány helyre van lehetőségük beállni a túrázás során. A helyzetet nehezíti, hogy az egyes hajók között jelentős méretbeli differenciák vannak, és az érkezések és távozások sem kalkulálhatók pontosan, hiszen ez nagymértékben függ az időjárási körülméányektől. Sőt, viharos időben a kikötőknek menedéket kell nyújtani a menekülő hajóknak, illetve nem kötelezhetőek a bent lévők, hogy elhagyják a védett helyet. 
 
-#### A Berthbooking egy balatoni túravitorlázást támogató rendszer része, mely egy kikötőhálózat kikötőhelyeinek menedzselésére szolgál.
+#### A Berthbooking egy balatoni túravitorlázást támogató alkalmazás, mely jelenlegi állapotában egy kikötőhálózat kikötőhelyeinek menedzselésére szolgál.
 
 Használata lehetővé teszi a túrázóknak fenntartott kikötőhelyek nyilvántartását a lánc egyes kikötőihez rendelten. A kikötőhelyek adatai, így a méretek is módosíthatóak, ami nagyobb rugalmasságot tesz lehetővé pontonos kikötők esetében, és változtathatóak a helyekhez kapcsolódó szolgáltatások is, ami pedig az infrastrukturális fejlesztések eredményének integrálását teszi lehetővé az alkalmazásba. A szoftver képes rá, hogy a kikötőhelyekre vonatkozóan gyűjtse a leadott foglalásokat az aktuális szezonra vonatkozóan. A szezon minden évben 04.01-10.31-ig tart. Fontos, hogy egy központi döntés előre meghatározza, hogy az egyes kikötőkben hány vendéghely alakítható ki. Ezt túllépni nem lehet, illetve mivel a kereslet jelentősen meghaladja a kínálatot, ezért egy hajó egyszerre csak 3 napot foglalhat le egy kikötőhelyen. 
 
@@ -34,9 +34,9 @@ Végpontok:
 | GET          | `"/api/ports"`        | Lekérdezi az összes Kikötő entitást. Az eredmény minden esetben ABC szerint lesz rendezve. Két opcionális paramétert lehet megadni: a `name` paraméterrel a kikötő nevére lehet szűrni, a `capacity` paraméterrel pedig a benne található minimális vengéghelyek számára.
 | GET          | `"/api/ports/{id}"`   | Lekérdez egy Kikötő entitást `id` alapján. Ha a kikötő nem létezik, egy application/problem+json-nel tér vissza.                                   |
   | POST        | `"/api/ports/"`   | Létrehoz egy Kikötő entitást                                 |
-  | POST         | `"/api/ports/{id}"`   | Hozzáad egy új Kikötőhely entitást az `id`-vel rendelkező Kikötőhöz. Ha a kikötő nem létezik, egy application/problem+json-nel tér vissza.        |
-  | PUT         | `"/api/ports/{id}"`   | Módosít egy Kikötő entitást `id` alapján.  Ha a kikötő nem létezik, egy application/problem+json-nel tér vissza.                                     |
-  | DELETE         | `"/api/ports/{id}"`   | Töröl egy Kikötő entitást `id` alapján.  Ha a kikötő nem létezik, egy application/problem+json-nel  tér vissza.                                      |
+  | POST         | `"/api/ports/{id}"`   | Hozzáad egy új Kikötőhely entitást az `id`-vel rendelkező Kikötőhöz. Ha a kikötő nem létezik, 404 Status kóddal és egy application/problem+json-nel tér vissza.        |
+  | PUT         | `"/api/ports/{id}"`   | Módosít egy Kikötő entitást `id` alapján.  Ha a kikötő nem létezik, 404 Status kóddal és egy application/problem+json-nel tér vissza.                                     |
+  | DELETE         | `"/api/ports/{id}"`   | Töröl egy Kikötő entitást `id` alapján.  Ha a kikötő nem létezik, 404 Status kóddal és  egy application/problem+json-nel  tér vissza.                                      |
 
 Üzleti logika két funkció megvalósításához tartozik.
 1. A kikötő vendéghelyeinek számát csak olyan szintre engedi csökkenteni, hogy az a már foglalásokkal rendelkező kikötőhelyek száma alá ne mehessen. Ha a felhasználó kevesebbre szeretné állítani a vendéghelyek számát, mint ami lehetséges, akkor RequestedNumberOfGuestBerthsIsLessThaneBookedBerthsException  generálódik, és az alkalmazás egy  egy application/problem+json-nel tér vissza. 
@@ -65,9 +65,9 @@ Végpontok:
 | HTTP metódus | Végpont                 | Leírás                                                                 |
 | ------------ | ----------------------- | ---------------------------------------------------------------------- |
 | GET          | `"/api/berths"`        | Lekérdezi az összes Kikötőhely entitást. Az eredmény minden esetben a foglalások kezdeti dátuma szerint lesz rendezve. Két opcionális paramétert lehet megadni: a `portName` paraméterrel a kikötő nevére lehet szűrni, a `width` paraméterrel pedig a kikötőhelyek minimális szélességére.                                 |
-| GET          | `"/api/berths/{id}"`   | Lekérdez egy Kikötőhely entitást `id` alapján.  Az eredmény a foglalások kezdeti dátuma szerint lesz rendezve. Ha a kikötőhely nem létezik, egy application/problem+json-nel tér vissza.                           |
-  | POST         | `"/api/berths/{id}"`   | Hozzáad egy Booking-ot az `id`-val rendelkező kikötőhelyhez. Ha a kikötőhely nem létezik, egy application/problem+json-nel tér vissza.           |
-  | PUT         | `"/api/berths/{id}/bookings"`   | Módosít egy Kikötőhely entitást `id` alapján. Ha a kikötőhely nem létezik, egy application/problem+json-nel tér vissza.                    |
+| GET          | `"/api/berths/{id}"`   | Lekérdez egy Kikötőhely entitást `id` alapján.  Az eredmény a foglalások kezdeti dátuma szerint lesz rendezve. Ha a kikötőhely nem létezik, 404 Status kóddal és egy application/problem+json-nel tér vissza.                           |
+  | POST         | `"/api/berths/{id}"`   | Hozzáad egy Booking-ot az `id`-val rendelkező kikötőhelyhez. Ha a kikötőhely nem létezik, 404 Status kóddal és egy application/problem+json-nel tér vissza.           |
+  | PUT         | `"/api/berths/{id}/bookings"`   | Módosít egy Kikötőhely entitást `id` alapján. Ha a kikötőhely nem létezik, 404 Status kóddal és egy application/problem+json-nel tér vissza.                    |
   | DELETE         | `"/api/berths/{id}"`   | Töröl egy Kikötőhely entitást `id` alapján. Ha a kikötőhely nem létezik, egy application/problem+json-nel tér vissza.                          |
 
 Üzleti logika a foglalások létrehozásához tartozik:
