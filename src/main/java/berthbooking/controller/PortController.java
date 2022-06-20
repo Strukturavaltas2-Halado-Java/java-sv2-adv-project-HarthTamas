@@ -63,6 +63,7 @@ public class PortController {
     @PostMapping("/{id}/berths")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Creates a Berth")
+    @ApiResponse(responseCode = "404", description = "Port not found")
     @ApiResponse(responseCode = "201", description = "Berth has been created")
     public PortDto addBerthToPort(@Parameter(description = "Id of the port", example = "1") @PathVariable("id") Long id, @Valid @RequestBody CreateBerthCommand command) {
         return service.addBerthToPort(id, command);
