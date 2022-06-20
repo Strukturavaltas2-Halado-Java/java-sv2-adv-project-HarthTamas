@@ -5,8 +5,8 @@ Accept: application/json
 
 {
   "portName": "Badacsony",
-  "email": "badaaa@balaporthu",
-  "numberOfGuestBerths": 1
+  "email": "badacsony@balaport.hu",
+  "numberOfGuestBerths": 6
 }
 ###
 
@@ -23,12 +23,12 @@ Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kikötő nevére
-GET http://localhost:8080/api/ports?value=10
+GET http://localhost:8080/api/ports?name=badacsony
 Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kapacitásra
-GET http://localhost:8080/api/ports?value=10
+GET http://localhost:8080/api/ports?capacity=5
 Accept: application/json
 ###
 
@@ -44,7 +44,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "numberOfGuestBerths": 0
+  "numberOfGuestBerths": 15
 }
 
 ###
@@ -61,7 +61,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "code": "PW-02",
+  "code": "PW-I",
   "length": 11000,
   "width": 320,
   "berthType": "POWER_WATER"

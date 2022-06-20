@@ -5,12 +5,6 @@ Accept: application/json
 
 ###
 
-#Paraméterezett lekérdezés / szűrés kikötő nevére és kikötőhely szélességre
-GET http://localhost:8080/api/berths?width=380&portName=badacsony
-Accept: application/json
-
-###
-
 #Paraméterezett lekérdezés / szűrés kikötő nevére
 GET http://localhost:8080/api/berths?portName=badacsony
 Accept: application/json
@@ -18,7 +12,13 @@ Accept: application/json
 ###
 
 #Paraméterezett lekérdezés / szűrés kikötőhely szélességre
-GET http://localhost:8080/api/berths?width=380
+GET http://localhost:8080/api/berths?width=310
+Accept: application/json
+
+###
+
+#Paraméterezett lekérdezés / szűrés kikötő nevére és kikötőhely szélességre
+GET http://localhost:8080/api/berths?width=310&portName=badacsony
 Accept: application/json
 
 ###
@@ -37,8 +37,8 @@ Accept: application/json
 
 {
   "code": "JJU7",
-  "length": 800,
-  "width": 320,
+  "length": 1100,
+  "width": 350,
   "berthType": "POWER_WATER_WIFI"
 }
 ###
