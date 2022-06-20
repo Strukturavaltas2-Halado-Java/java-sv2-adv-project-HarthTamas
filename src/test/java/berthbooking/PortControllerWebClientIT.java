@@ -85,7 +85,7 @@ public class PortControllerWebClientIT {
     @Test
     void testGetPortsWithName() {
         List<PortDto> result = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("name", "Badacsony").build())
+                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("town", "Badacsony").build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(PortDto.class)
@@ -107,7 +107,7 @@ public class PortControllerWebClientIT {
     @Test
     void testGetPortsWithNameAndMinNumberOfBerths() {
         List<PortDto> result = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("capacity", 6).queryParam("name", "Badacsony").build())
+                .uri(uriBuilder -> uriBuilder.path("api/ports").queryParam("capacity", 6).queryParam("town", "Badacsony").build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(PortDto.class)

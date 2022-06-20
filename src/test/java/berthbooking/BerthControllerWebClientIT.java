@@ -89,7 +89,7 @@ public class BerthControllerWebClientIT {
     @Test
     void testGetBerthsWithPortName() {
         List<BerthDto> result = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("api/berths").queryParam("portName","Szigliget").build())
+                .uri(uriBuilder -> uriBuilder.path("api/berths").queryParam("town","Szigliget").build())
                 .exchange()
                 .expectBodyList(BerthDto.class)
                 .returnResult().getResponseBody();
@@ -100,7 +100,7 @@ public class BerthControllerWebClientIT {
     void testGetBerthsWithPortNameAndWidth() {
         List<BerthDto> result = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder.path("api/berths")
-                        .queryParam("portName","Badacsony")
+                        .queryParam("town","Badacsony")
                         .queryParam("width",295)
                         .build())
                 .exchange()
@@ -159,12 +159,12 @@ public class BerthControllerWebClientIT {
     void testGetBerthByIdWithWrongId() {
         Problem p =
                 webTestClient.get()
-                        .uri("/api/berths/{id}", 100L)
+                        .uri("/api/berths/{id}", 0L)
                         .exchange()
                         .expectStatus().isNotFound()
                         .expectBody(Problem.class)
                         .returnResult().getResponseBody();
-        assertThat(p.getDetail()).isEqualTo("Berth not found with 100 id");
+        assertThat(p.getDetail()).isEqualTo("Berth not found with 0 id");
     }
 
     @Test
