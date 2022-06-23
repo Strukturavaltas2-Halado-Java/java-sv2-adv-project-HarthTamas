@@ -22,7 +22,7 @@ Accept: application/json
 
 ###
 
-#Paraméterezett lekérdezés / szűrés kikötő nevére
+#Paraméterezett lekérdezés / szűrés kikötő városának nevére
 GET http://localhost:8080/api/ports?town=badacsony
 Accept: application/json
 ###
@@ -32,7 +32,7 @@ GET http://localhost:8080/api/ports?capacity=5
 Accept: application/json
 ###
 
-#Paraméterezett lekérdezés / szűrés kikötő nevére és kapacitásra
+#Paraméterezett lekérdezés / szűrés kikötő városának nevére és kapacitásra
 GET http://localhost:8080/api/ports?capacity=3&town=badacsony
 Accept: application/json
 
