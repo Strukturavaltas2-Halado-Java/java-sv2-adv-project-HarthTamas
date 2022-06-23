@@ -28,7 +28,8 @@ public class BerthController {
     @GetMapping()
     @Operation(summary = "Find berths", description = "Find berths")
     public List<BerthDto> getAllBerthsWithParameters(@Parameter(description = "Width of the berth", example = "240") @RequestParam Optional<Integer> width,
-                                                     @Parameter(description = "Name of the town where port is located", example = "Keszthely")@RequestParam Optional<String> town) {
+                                                     @Parameter(description = "Name of the town where port is located", example = "Keszthely")
+                                                     @RequestParam Optional<String> town) {
         return service.getAllBerthsWithParameters(width, town);
     }
 
@@ -50,7 +51,8 @@ public class BerthController {
     @PutMapping("/{id}")
     @Operation(summary = "Update berth by id", description = "Update berth by id.")
     @ApiResponse(responseCode = "404", description = "Berth not found")
-    public BerthDto updateBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id, @Valid @RequestBody UpdateBerthCommand command) {
+    public BerthDto updateBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id,
+                                    @Valid @RequestBody UpdateBerthCommand command) {
         return service.updateBerthById(id, command);
     }
 
@@ -58,7 +60,8 @@ public class BerthController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Creates a booking")
     @ApiResponse(responseCode = "201", description = "Booking has been created")
-    public BerthDto addBookingToBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id, @Valid @RequestBody CreateBookingCommand command) {
+    public BerthDto addBookingToBerthById(@Parameter(description = "Id of the berth", example = "1") @PathVariable("id") long id,
+                                          @Valid @RequestBody CreateBookingCommand command) {
         return service.addBookingToBerthById(id, command);
     }
 

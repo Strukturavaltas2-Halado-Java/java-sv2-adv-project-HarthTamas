@@ -56,7 +56,8 @@ public class PortController {
     @PutMapping("/{id}")
     @Operation(summary = "Update port by id")
     @ApiResponse(responseCode = "404", description = "Port not found")
-    public PortDto updatePortNumberOfGuestBerths(@Parameter(description = "Id of the port", example = "1") @PathVariable("id") Long id, @Valid @RequestBody UpdatePortCommand command) {
+    public PortDto updatePortNumberOfGuestBerths(@Parameter(description = "Id of the port", example = "1") @PathVariable("id") Long id,
+                                                 @Valid @RequestBody UpdatePortCommand command) {
         return service.updatePortNumberOfGuestBerths(id, command);
     }
 
@@ -65,7 +66,8 @@ public class PortController {
     @Operation(summary = "Creates a Berth")
     @ApiResponse(responseCode = "404", description = "Port not found")
     @ApiResponse(responseCode = "201", description = "Berth has been created")
-    public PortDto addBerthToPort(@Parameter(description = "Id of the port", example = "1") @PathVariable("id") Long id, @Valid @RequestBody CreateBerthCommand command) {
+    public PortDto addBerthToPort(@Parameter(description = "Id of the port", example = "1") @PathVariable("id") Long id,
+                                  @Valid @RequestBody CreateBerthCommand command) {
         return service.addBerthToPort(id, command);
     }
 
