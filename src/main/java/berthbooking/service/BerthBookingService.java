@@ -61,7 +61,7 @@ public class BerthBookingService {
         if (command.getNumberOfGuestBerths() >= berthsWithBookings) {
             port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
         } else {
-            throw new RequestedNumberOfGuestBerthsIsLessThaneBookedBerthsException(berthsWithBookings, command.getNumberOfGuestBerths());
+            throw new RequestedNumberOfGuestBerthsIsLessThanBookedBerthsException(berthsWithBookings, command.getNumberOfGuestBerths());
         }
         return modelMapper.map(port, PortDto.class);
     }
