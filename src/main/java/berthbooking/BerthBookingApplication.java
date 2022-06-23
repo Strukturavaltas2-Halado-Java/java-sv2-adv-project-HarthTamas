@@ -1,5 +1,6 @@
 package berthbooking;
 
+import berthbooking.model.Season;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,11 @@ public class BerthBookingApplication {
     }
 
     @Bean
+    public Season season() {
+        return new Season();
+    }
+
+    @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
@@ -30,4 +36,5 @@ public class BerthBookingApplication {
                         .version("1.0.0")
                         .description("Managing ports & berths & bookings - Bookings only available in the season (04.01-10.31)"));
     }
+
 }

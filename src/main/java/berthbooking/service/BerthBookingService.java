@@ -5,6 +5,7 @@ import berthbooking.exceptions.*;
 import berthbooking.model.Berth;
 import berthbooking.model.Booking;
 import berthbooking.model.Port;
+import berthbooking.model.Season;
 import berthbooking.repository.BerthRepository;
 import berthbooking.repository.PortRepository;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +22,9 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-
 public class BerthBookingService {
 
-    private static final LocalDate OPENING_DATE = LocalDate.of(LocalDate.now().getYear(), Month.APRIL, 1);
-    private static final LocalDate CLOSING_DATE = LocalDate.of(LocalDate.now().getYear(), Month.OCTOBER, 31);
-
+    private Season season;
     private PortRepository portRepository;
     private BerthRepository berthRepository;
     private ModelMapper modelMapper;
@@ -49,7 +46,6 @@ public class BerthBookingService {
                 .collect(Collectors.toList());
     }
 
-
     public void deletePortById(long id) {
         if (portRepository.existsById(id)) {
             portRepository.deleteById(id);
@@ -65,7 +61,7 @@ public class BerthBookingService {
         if (command.getNumberOfGuestBerths() >= berthsWithBookings) {
             port.setNumberOfGuestBerths(command.getNumberOfGuestBerths());
         } else {
-            throw  new RequestedNumberOfGuestBerthsIsLessThaneBookedBerthsException(berthsWithBookings, command.getNumberOfGuestBerths());
+            throw new RequestedNumberOfGuestBerthsIsLessThaneBookedBerthsException(berthsWithBookings, command.getNumberOfGuestBerths());
         }
         return modelMapper.map(port, PortDto.class);
     }
@@ -126,7 +122,7 @@ public class BerthBookingService {
     }
 
     private void checkConditions(Berth berth, CreateBookingCommand command) {
-        isBookingInActualYearsSeason(command);
+        isBookingInSeason(command);
         isBoatSmallerThanBerth(berth, command);
         isBookingTimeFree(berth, command);
     }
@@ -149,9 +145,10 @@ public class BerthBookingService {
         }
     }
 
-    private void isBookingInActualYearsSeason(CreateBookingCommand command) {
-        if (command.getFromDate().isBefore(OPENING_DATE) || command.getFromDate().isAfter(CLOSING_DATE.minusDays(command.getNumberOfDays() - 1))) {
-            throw new OutOfActualYearsSeasonException(command.getFromDate());
+    private void isBookingInSeason(CreateBookingCommand command) {
+        if (command.getFromDate().isBefore(season.getStartDate()) ||
+                command.getFromDate().isAfter(season.getEndDate().minusDays(command.getNumberOfDays() - 1))) {
+            throw new OutOfSeasonsException(command.getFromDate());
         }
     }
 
@@ -160,5 +157,7 @@ public class BerthBookingService {
         berth.setBookings(bookingsOrdered);
     }
 
-
+    public void setSeason(Season season) {
+        this.season = season;
+    }
 }

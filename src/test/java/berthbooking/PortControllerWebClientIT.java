@@ -2,6 +2,7 @@ package berthbooking;
 
 import berthbooking.dtos.*;
 import berthbooking.model.BerthType;
+import berthbooking.model.Season;
 import berthbooking.service.BerthBookingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ public class PortControllerWebClientIT {
     @Autowired
     BerthBookingService service;
 
+    int testYear;
     PortDto portBadacsony;
     PortDto portKeszthely;
     PortDto portSzigliget;
@@ -37,15 +39,16 @@ public class PortControllerWebClientIT {
 
     @BeforeEach
     void init() {
-        Clock clock = Clock.fixed(Instant.parse("2022-04-01T00:00:00.00Z"), ZoneId.of("UTC"));
-        LocalDate date = LocalDate.now(clock);
-
         portSzemes = service.createPort(new CreatePortCommand("Balatonszemes", "balatonszemes@balaport.hu", 4));
         portBadacsony = service.createPort(new CreatePortCommand("Badacsony", "badacsony@balaport.hu", 8));
         portSzigliget = service.createPort(new CreatePortCommand("Szigliget", "szigliget@balaport.hu", 2));
         portKeszthely = service.createPort(new CreatePortCommand("Keszthely", "keszthely@balaport.hu", 14));
         berthSzigPW = service.addBerthToPort(portSzigliget.getId(),
                 new CreateBerthCommand("PW-01", 1_000, 280, BerthType.POWER_WATER)).getBerths().get(0);
+
+        testYear = LocalDate.now().getYear() + 1;
+        Season testSeason = new Season(LocalDate.of(testYear, Month.APRIL, 1), LocalDate.of(testYear, Month.OCTOBER, 31));
+        service.setSeason(testSeason);
     }
 
     @Test
@@ -197,7 +200,7 @@ public class PortControllerWebClientIT {
     }
 
     @Test
-    void testAddBerthsUpdatePortWithWrongPortId() {
+    void testAddBerthsWithWrongPortId() {
         Problem p =
                 webTestClient.put()
                         .uri("/api/ports/{id}", 100L)
@@ -210,12 +213,13 @@ public class PortControllerWebClientIT {
     }
 
     @Test
-    void testUpdateWithWrongNumberOfGuestBerths() {
+    void testUpdatePortWithWrongNumberOfGuestBerths() {
         PortDto portDto = service.addBerthToPort(portBadacsony.getId(),
                 new CreateBerthCommand("Wifi - 01", 12_000, 300, BerthType.POWER_WATER_WIFI));
         BerthDto berthDto = portDto.getBerths().get(0);
         service.addBookingToBerthById(berthDto.getId(),
-                new CreateBookingCommand("Gyagyás fóka", "H-121212", 730, 240, LocalDate.of(2022, Month.AUGUST, 1), 2));
+                new CreateBookingCommand("Gyagyás fóka", "H-121212", 730, 240,
+                        LocalDate.of(testYear, Month.AUGUST, 1), 2));
 
         Problem p = webTestClient.put()
                 .uri("api/ports/{id}", portDto.getId())
@@ -242,7 +246,5 @@ public class PortControllerWebClientIT {
                 .returnResult().getResponseBody();
         assertThat(p.getDetail()).isEqualTo("Number of berths exceeds limit(2) at port with id: " + portSzigliget.getId());
     }
-
-
 }
 
