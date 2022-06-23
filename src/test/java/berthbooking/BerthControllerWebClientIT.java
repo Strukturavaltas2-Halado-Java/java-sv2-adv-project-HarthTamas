@@ -163,12 +163,12 @@ public class BerthControllerWebClientIT {
     void testGetBerthByIdWithWrongId() {
         Problem p =
                 webTestClient.get()
-                        .uri("/api/berths/{id}", 0L)
+                        .uri("/api/berths/{id}", 100L)
                         .exchange()
                         .expectStatus().isNotFound()
                         .expectBody(Problem.class)
                         .returnResult().getResponseBody();
-        assertThat(p.getDetail()).isEqualTo("Berth not found with 0 id");
+        assertThat(p.getDetail()).isEqualTo("Berth not found with 100 id");
     }
 
     @Test
