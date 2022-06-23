@@ -13,9 +13,6 @@ public class Season {
         this.endDate = endDate;
     }
 
-    public Season() {
-    }
-
     public LocalDate getStartDate() {
         return startDate == null ? LocalDate.of(LocalDate.now().getYear(), Month.APRIL, 1) : startDate;
     }
@@ -24,11 +21,4 @@ public class Season {
         return endDate == null ? LocalDate.of(LocalDate.now().getYear(), Month.OCTOBER, 31) : endDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 }
