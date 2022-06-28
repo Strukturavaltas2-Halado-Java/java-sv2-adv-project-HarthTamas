@@ -106,6 +106,6 @@ Az alkalmazáshoz a SWAGGER UI biztosít API dokumentációt, és lehetőséget 
 
 A service réteg közvetíti a controll réteg felől érkező kéréseket a Repository réteg felé, és vissza, elvégzi a DTOk-entitássá és vissza alakítását és ügyel rá, hogy entitás sose kerülhessen a controll rétegbe. Szintén ebben a rétegben van megvalósítva az üzleti logika is, amely az entitásokhoz tartozó végpontoknál van kifejtve.
 
-A repository réteg Spring Data JPA-val van megvalósítva, a sémák inicializálását pedg a Flyway végzi el. Maga az adatbázis egy külön konterben futó Maria DB adatbázis.
+A repository réteg Spring Data JPA-val van megvalósítva, a sémák inicializálását pedg a Flyway végzi el. Maga az adatbázis egy külön konténerben futó Maria DB adatbázis.
 
 ---
