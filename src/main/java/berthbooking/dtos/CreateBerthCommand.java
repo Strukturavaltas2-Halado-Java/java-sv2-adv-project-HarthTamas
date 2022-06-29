@@ -24,7 +24,7 @@ public class CreateBerthCommand {
     private String code;
 
     @NotNull
-    @Schema(description="Length of the berth", example = "1000")
+    @Schema(description="Length of the berth", example = "10000")
     @Positive(message = "The length of the berth must be positive number!")
     private int length;
 
