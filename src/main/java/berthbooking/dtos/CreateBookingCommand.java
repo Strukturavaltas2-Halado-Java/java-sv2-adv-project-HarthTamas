@@ -44,7 +44,7 @@ public class CreateBookingCommand {
 
     @NotNull
     @Schema(description="Number of days to book", example = "3")
-    @Max(value = 3, message = "Must be a positive number and less than "+ MAX_DAYS)
+    @Max(value = 3, message = "Must be a positive number and equal or less than "+ MAX_DAYS)
     @Positive(message = "Must be a positive number and less than "+ MAX_DAYS)
     private int numberOfDays;
 

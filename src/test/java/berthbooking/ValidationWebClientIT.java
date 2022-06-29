@@ -91,7 +91,7 @@ public class ValidationWebClientIT {
                 .contains("The length of the boat must be positive number!")
                 .contains("The width of the boat must be positive number!")
                 .contains("This date must be in the present or in the future!")
-                .contains("Must be a positive number and less than 3");
+                .contains("Must be a positive number and equal or less than 3");
     }
 
 }
